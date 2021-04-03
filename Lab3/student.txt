@@ -1,0 +1,40 @@
+use Student
+
+db.student.insert({roll: 10, name: "KP", age: 21, contact: "2243422332", email: "krishna@gmail.com"})
+db.student.insert({roll: 11, name: "ABC", age: 21, contact: "22323422332", email: "abc@gmail.com"})
+db.student.insert({roll: 12, name: "KAR", age: 21, contact: "22992342232", email: "karthik@gmail.com"})
+
+show collections
+/* students */
+
+db.student.find()
+/*
+{"_id":"60680cf64affbd001fc34456","roll":10,"name":"KP","age":21,"contact":"2243422332","email":"krishna@gmail.com"}
+{"_id":"60680cfb4affbd001fc34457","roll":11,"name":"ABC","age":21,"contact":"22323422332","email":"abc@gmail.com"}
+{"_id":"60680d024affbd001fc34458","roll":12,"name":"KAR","age":21,"contact":"22992342232","email":"karthik@gmail.com"}
+*/
+
+
+db.student.update({roll:10}, {$set: {email: "krishnaprasad@gmail.com"}})
+db.student.find()
+/*
+{"_id":"60680cf64affbd001fc34456","roll":10,"name":"KP","age":21,"contact":"2243422332","email":"krishnaprasad@gmail.com"}
+{"_id":"60680cfb4affbd001fc34457","roll":11,"name":"ABC","age":21,"contact":"22323422332","email":"abc@gmail.com"}
+{"_id":"60680d024affbd001fc34458","roll":12,"name":"KAR","age":21,"contact":"22992342232","email":"karthik@gmail.com"}
+*/
+
+
+db.student.update({name:"ABC"}, {$set: {name: "FEM"}})
+db.student.find()
+/*
+{"_id":"60680cf64affbd001fc34456","roll":10,"name":"KP","age":21,"contact":"2243422332","email":"krishnaprasad@gmail.com"}
+{"_id":"60680cfb4affbd001fc34457","roll":11,"name":"FEC","age":21,"contact":"22323422332","email":"abc@gmail.com"}
+{"_id":"60680d024affbd001fc34458","roll":12,"name":"KAR","age":21,"contact":"22992342232","email":"karthik@gmail.com"}
+*/
+
+
+mongoexport --collection=student --db=Students --out=output.csv --type=csv --fields="roll, name, age, contact, email"
+
+db.student.drop()
+
+mongoimport -d Students -c student --type csv --file output.csv --headerline
